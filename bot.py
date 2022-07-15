@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 
 load_dotenv()
 TELEGRAM_TOKEN = os.getenv('TELEGRAM_TOKEN')
-HEROKU_PORT = int(os.environ.get('HEROKU_PORT', '8443'))
+HEROKU_PORT = int(os.environ.get('PORT', '8443'))
 HEROKU_APP_NAME = os.getenv('HEROKU_APP_NAME')
 
 WELCOME_TEXT = (
