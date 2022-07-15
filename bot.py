@@ -14,8 +14,8 @@ logger = logging.getLogger(__name__)
 
 load_dotenv()
 TELEGRAM_TOKEN = os.getenv('TELEGRAM_TOKEN')
-PORT = int(os.environ.get('TELEGRAM_PORT', 5000))
-HEROKU_URL = os.getenv('HEROKU_URL')
+HEROKU_PORT = int(os.environ.get('HEROKU_PORT', '8443'))
+HEROKU_APP_NAME = os.getenv('HEROKU_APP_NAME')
 
 WELCOME_TEXT = (
     'Типограф — это инструмент, который приводит текст в соответствие '
@@ -131,8 +131,7 @@ if __name__ == '__main__':
 
     updater.start_webhook(
         listen='0.0.0.0',
-        port=PORT,
+        port=HEROKU_PORT,
         url_path=TELEGRAM_TOKEN
     )
-    updater.bot.setWebhook(HEROKU_URL + TELEGRAM_TOKEN)
-    updater.idle()
+    updater.bot.set_webhook(f'https://{HEROKU_APP_NAME}.herokuapp.com/{TELEGRAM_TOKEN}')
