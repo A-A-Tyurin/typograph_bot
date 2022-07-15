@@ -14,6 +14,8 @@ logger = logging.getLogger(__name__)
 
 load_dotenv()
 TELEGRAM_TOKEN = os.getenv('TELEGRAM_TOKEN')
+TELEGRAM_PORT = int(os.environ.get('TELEGRAM_PORT', '8443'))
+HEROKU_URL = os.getenv('HEROKU_URL')
 
 WELCOME_TEXT = (
     'Типограф — это инструмент, который приводит текст в соответствие '
@@ -127,5 +129,10 @@ if __name__ == '__main__':
     unknown_handler = MessageHandler(Filters.all & (~Filters.command) & (~Filters.text), unknown)
     dispatcher.add_handler(unknown_handler)
 
-    updater.start_polling()
+    updater.start_webhook(
+        listen="0.0.0.0",
+        port=TELEGRAM_PORT,
+        url_path=TELEGRAM_TOKEN,
+        webhook_url=HEROKU_URL + TELEGRAM_TOKEN
+    )
     updater.idle()
