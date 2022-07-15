@@ -135,3 +135,4 @@ if __name__ == '__main__':
         url_path=TELEGRAM_TOKEN,
         webhook_url=f'https://{HEROKU_APP_NAME}.herokuapp.com/{TELEGRAM_TOKEN}'
     )
+    updater.idle()
