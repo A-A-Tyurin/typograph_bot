@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 
 load_dotenv()
 TELEGRAM_TOKEN = os.getenv('TELEGRAM_TOKEN')
-TELEGRAM_PORT = int(os.environ.get('TELEGRAM_PORT', '8443'))
+PORT = int(os.environ.get('TELEGRAM_PORT', 5000))
 HEROKU_URL = os.getenv('HEROKU_URL')
 
 WELCOME_TEXT = (
@@ -131,8 +131,8 @@ if __name__ == '__main__':
 
     updater.start_webhook(
         listen="0.0.0.0",
-        port=TELEGRAM_PORT,
-        url_path=TELEGRAM_TOKEN,
-        webhook_url=HEROKU_URL + TELEGRAM_TOKEN
+        port=PORT,
+        url_path=TELEGRAM_TOKEN
     )
+    updater.bot.setWebhook(HEROKU_URL + TELEGRAM_TOKEN)
     updater.idle()
